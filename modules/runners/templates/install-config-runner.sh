@@ -7,8 +7,10 @@ rm -rf actions-runner.tar.gz
 
 ${arm_patch}
 
-INSTANCE_ID=$(wget -q -O - http://169.254.169.254/latest/meta-data/instance-id)
-REGION=$(curl -s 169.254.169.254/latest/dynamic/instance-identity/document | jq -r .region)
+TOKEN=$(curl --request PUT "http://169.254.169.254/latest/api/token" --header "X-aws-ec2-metadata-token-ttl-seconds: 3600")
+
+INSTANCE_ID=$(wget -q -O - http://169.254.169.254/latest/meta-data/instance-id --header "X-aws-ec2-metadata-token: $TOKEN")
+REGION=$(curl -s 169.254.169.254/latest/dynamic/instance-identity/document --header "X-aws-ec2-metadata-token: $TOKEN" | jq -r .region)
 
 echo wait for configuration
 while [[ $(aws ssm get-parameters --names ${environment}-$INSTANCE_ID --with-decryption --region $REGION | jq -r ".Parameters | .[0] | .Value") == null ]]; do
