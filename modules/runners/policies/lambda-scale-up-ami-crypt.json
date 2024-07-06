@@ -13,7 +13,7 @@
                 "kms:Decrypt",
                 "kms:CreateGrant"
 	    ],
-            "Resource": "${ami_enc_kms_arns}"
+            "Resource": "${jsonencode(ami_enc_kms_arns)}"
         }
     ]
 }
