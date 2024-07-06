@@ -333,6 +333,12 @@ variable "kms_key_arn" {
   default     = null
 }
 
+variable "ami_enc_kms_arns" {
+  description = "Optional CMK Key ARNs to be used for AMI Encryption keys."
+  type        = list(string)
+  default     = [] 
+}
+
 variable "egress_rules" {
   description = "List of egress rules for the GitHub runner instances."
   type = list(object({

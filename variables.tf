@@ -149,6 +149,13 @@ variable "kms_key_arn" {
   default     = null
 }
 
+variable "ami_enc_kms_arns" {
+  description = "Optional CMK Key ARNs to be used for AMI Encryption keys."
+  type        = list(string)
+  default     = []
+}
+
+
 variable "userdata_template" {
   description = "Alternative user-data template, replacing the default template. By providing your own user_data you have to take care of installing all required software, including the action runner. Variables userdata_pre/post_install are ignored."
   type        = string

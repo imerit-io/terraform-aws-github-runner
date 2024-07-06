@@ -131,6 +131,8 @@ module "runners" {
   ghes_url = var.ghes_url
 
   kms_key_arn = var.kms_key_arn
+  ami_enc_kms_arns = var.ami_enc_kms_arns
+
 }
 
 module "runner_binaries" {
