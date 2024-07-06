@@ -79,6 +79,15 @@ resource "aws_iam_role_policy" "scale_up" {
   })
 }
 
+resource "aws_iam_role_policy" "scale_up_ami_kms_crypt" {
+  count      = length(var.ami_enc_kms_arns) > 0 ? 1 : 0
+  name = "${var.environment}-lambda-scale-up-ami-kms-crypt"
+  role = aws_iam_role.scale_up.name
+  policy = templatefile("${path.module}/policies/lambda-scale-up-ami-crypt.json", {
+    ami_enc_kms_arns = var.ami_enc_kms_arns
+  })
+}
+
 
 resource "aws_iam_role_policy" "scale_up_logging" {
   name = "${var.environment}-lambda-logging"
